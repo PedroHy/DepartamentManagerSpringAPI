@@ -17,17 +17,17 @@ import com.desafio.departamentapi.models.Departament;
 import com.desafio.departamentapi.repositories.DepartamentRepository;
 
 @RestController
-@RequestMapping("/departament")
+@RequestMapping("/api/departament")
 public class DepartamentController {
     
     @Autowired
     private DepartamentRepository repo;
-
+    
     @GetMapping
     public Optional<Departament> getById(@RequestParam long id){
         return repo.findById(id);
     }
-
+    
     @GetMapping("/all")
     public List<Departament> getAll(){
         return repo.findAll();
@@ -39,8 +39,14 @@ public class DepartamentController {
     }
 
     @PutMapping
-    public void update(@RequestBody Departament departament){
-        repo.save(departament);
+    public void update(@RequestParam long id, @RequestBody Departament departamentFromBody){
+        Optional<Departament> departamentObservable = repo.findById(id);
+        Departament departament;
+        if(departamentObservable.isPresent()){
+            departament = departamentObservable.get();
+            departament.Update(departamentFromBody.getId(), departamentFromBody.getName(), departamentFromBody.getAcronym());
+            repo.save(departament);
+        }
     }
 
     @DeleteMapping

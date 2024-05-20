@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.desafio.departamentapi.models.Colaborator;
 import com.desafio.departamentapi.repositories.ColaboratorRepository;
 
+
 @RestController
-@RequestMapping("/colaborator")
+@RequestMapping("/api/colaborator")
 public class ColaboratorController {
     @Autowired
     private ColaboratorRepository repo;
